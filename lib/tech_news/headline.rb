@@ -24,25 +24,24 @@ class TechNews::Headline
     doc = Nokogiri::HTML(open("https://www.nytimes.com/section/technology"))
 
     article = self.new
-    article.title = doc.search("#latest-panel h2.headline").first.text
-    article.author = doc.search("#latest-panel p.byline").first.text
+    article.title = doc.search("#latest-panel h2.headline").first.text.gsub /^\s*/, ''
+    article.author = doc.search("#latest-panel p.byline").first.text.gsub /^\s*/, ''
     article.publisher = "The New York Times"
-    article.url = doc.search("#latest-panel a.story-link").first.attr("href")
+    article.url = doc.search("#latest-panel a.story-link").first.attr("href").gsub /^\s*/, ''
 
     article
   end
 
   def self.scrape_wired
     doc = Nokogiri::HTML(open("https://www.wired.com/"))
-    #binding.pry
 
     article = self.new
-    article.title = doc.search("ul.post-listing-component__list h5.post-listing-list-item__title").first.text
-    article.author = doc.search("ul.post-listing-component__list span.byline-component__content").first.text
+    article.title = doc.search("div.secondary-grid-component h5.post-listing-list-item__title").first.text
+    article.author = doc.search("div.secondary-grid-component span.byline-component__content").first.text
     article.publisher = "Wired"
-    article.url = doc.search("ul.post-listing-component__list a.post-listing-list-item__link").first.attr("href")
+    article.url = doc.search("div.secondary-grid-component a.post-listing-list-item__link").first.attr("href")
 
-    article    
+    article
   end
 
   def self.scrape_techcrunch
@@ -56,8 +55,12 @@ class TechNews::Headline
     article.publisher = "TechCrunch"
     article.url = doc.search("div.block-content h2.post-title a").first.attr("href")
     article
-    
+
   end
+
+  #def self.scrape_content
+
+  #end
 
 
 end

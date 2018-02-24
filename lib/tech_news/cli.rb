@@ -28,7 +28,8 @@ class TechNews::CLI
         puts "#{the_headline.title} - #{the_headline.author} - #{the_headline.publisher}"
       elsif input == "retrieve"
         list_headlines
-      else
+      else input != "exit"
+        #when exit is enterred, it also says I don't understand input
         puts "I don't understand your input. Type 1, 2, or 3, exit or retrieve to make a choice."
       end
     end
