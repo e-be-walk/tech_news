@@ -15,7 +15,7 @@ class TechNews::Headline
 
     news << self.scrape_nytimes
     news << self.scrape_wired
-    #news << self.scrape_techcrunch
+    news << self.scrape_techcrunch
 
     news
   end
@@ -45,6 +45,19 @@ class TechNews::Headline
     article    
   end
 
+  def self.scrape_techcrunch
+    doc = Nokogiri::HTML(open("https://techcrunch.com/"))
+    #binding.pry
+
+    article = self.new
+    article.title = doc.search("div.block-content h2.post-title").first.text
+    #author will need work so that it does not also retrieve timestamp...?
+    article.author = doc.search("div.block-content div.byline a").first.attr("title")
+    article.publisher = "TechCrunch"
+    article.url = doc.search("div.block-content h2.post-title a").first.attr("href")
+    article
+    
+  end
 
 
 end
