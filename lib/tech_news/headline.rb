@@ -14,12 +14,12 @@ class TechNews::Headline
     news = []
 
     news << self.scrape_nytimes
-    #news << self.scrape_wired
+    news << self.scrape_wired
     #news << self.scrape_techcrunch
 
     news
   end
-
+  #fix sloppy formatting issues
   def self.scrape_nytimes
     doc = Nokogiri::HTML(open("https://www.nytimes.com/section/technology"))
 
@@ -31,5 +31,20 @@ class TechNews::Headline
 
     article
   end
+
+  def self.scrape_wired
+    doc = Nokogiri::HTML(open("https://www.wired.com/"))
+    #binding.pry
+
+    article = self.new
+    article.title = doc.search("ul.post-listing-component__list h5.post-listing-list-item__title").first.text
+    article.author = doc.search("ul.post-listing-component__list span.byline-component__content").first.text
+    article.publisher = "Wired"
+    article.url = doc.search("ul.post-listing-component__list a.post-listing-list-item__link").first.attr("href")
+
+    article    
+  end
+
+
 
 end
