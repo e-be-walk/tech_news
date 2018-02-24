@@ -8,11 +8,10 @@ class TechNews::CLI
 
   def list_headlines
     puts "Here are the newest headlines in tech:"
-    puts <<-DOC
-    1. Wired
-    2. TechCrunch
-    3. NYTimes
-    DOC
+    @headlines = TechNews::Headline.today
+    @headlines.each.with_index(1) do |headline, i|
+      puts "#{i}. #{headline.title} - #{headline.author} - #{headline.publisher}"
+    end
   end
 
   def option
@@ -24,14 +23,10 @@ class TechNews::CLI
       type 'retrieve'.
       DOC
       input = gets.strip
-      case input
-      when "1"
-        puts "article content 1"
-      when "2"
-        puts "article content 2"
-      when "3"
-        puts "article content 3"
-      when "retrieve"
+      if input.to_i > 0
+        the_headline = @headlines[input.to_i-1]
+        puts "#{the_headline.title} - #{the_headline.author} - #{the_headline.publisher}"
+      elsif input == "retrieve"
         list_headlines
       else
         puts "I don't understand your input. Type 1, 2, or 3, exit or retrieve to make a choice."
