@@ -24,8 +24,8 @@ class TechNews::Headline
     doc = Nokogiri::HTML(open("https://www.nytimes.com/section/technology"))
 
     article = self.new
-    article.title = doc.search("#latest-panel h2.headline").first.text.gsub /^\s*/, ''
-    article.author = doc.search("#latest-panel p.byline").first.text.gsub /^\s*/, ''
+    article.title = doc.search("#latest-panel h2.headline").first.text.strip
+    article.author = doc.search("#latest-panel p.byline").first.text.strip
     article.publisher = "The New York Times"
     article.url = doc.search("#latest-panel a.story-link").first.attr("href").gsub /^\s*/, ''
 
