@@ -1,12 +1,7 @@
 class TechNews::Headline
-  attr_accessor :title, :author, :publisher, :url
+  attr_accessor :title, :author, :publisher, :url, :summary, :timestamp
 
   def self.today
-    #puts <<-DOC
-    #1. Wired
-    #2. TechCrunch
-    #3. NYTimes
-    #DOC
     self.scrape_news
   end
 
@@ -19,15 +14,18 @@ class TechNews::Headline
 
     news
   end
-  #fix sloppy formatting issues
+
   def self.scrape_nytimes
     doc = Nokogiri::HTML(open("https://www.nytimes.com/section/technology"))
+
 
     article = self.new
     article.title = doc.search("#latest-panel h2.headline").first.text.strip
     article.author = doc.search("#latest-panel p.byline").first.text.strip
     article.publisher = "The New York Times"
-    article.url = doc.search("#latest-panel a.story-link").first.attr("href").gsub /^\s*/, ''
+    article.url = doc.search("#latest-panel a.story-link").first.attr("href")
+    article.summary = doc.search("#latest-panel p.summary").first.text.strip
+    article.timestamp = doc.search("div.stream footer.story-footer").first.text.strip
 
     article
   end
@@ -40,20 +38,23 @@ class TechNews::Headline
     article.author = doc.search("div.secondary-grid-component span.byline-component__content").first.text
     article.publisher = "Wired"
     article.url = doc.search("div.secondary-grid-component a.post-listing-list-item__link").first.attr("href")
+    article.summary = "Unfortunately, Wired does not include a summary either."
+    article.timestamp = "Sorry- Wired does not include a timestamp. I assure you, this is the most recent article on their page.\n"
 
     article
   end
 
   def self.scrape_techcrunch
     doc = Nokogiri::HTML(open("https://techcrunch.com/"))
-    #binding.pry
 
     article = self.new
     article.title = doc.search("div.block-content h2.post-title").first.text
-    #author will need work so that it does not also retrieve timestamp...?
     article.author = doc.search("div.block-content div.byline a").first.attr("title")
     article.publisher = "TechCrunch"
     article.url = doc.search("div.block-content h2.post-title a").first.attr("href")
+    article.summary = doc.search("div.block-content p.excerpt").first.text
+    article.timestamp = doc.search("div.byline time.timestamp").first.text.strip
+
     article
 
   end

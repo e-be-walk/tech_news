@@ -18,14 +18,17 @@ class TechNews::CLI
     input = nil
     while input != "exit"
       puts <<-DOC.gsub /^\s*/, ''
-      If you would like more information, input the number of the article or type
+      \nIf you would like more information, input the number of the article or type
       'exit' to leave. If you would like to retrieve the newest headlines again,
       type 'retrieve'.
       DOC
       input = gets.strip
       if input.to_i > 0
         the_headline = @headlines[input.to_i-1]
-        puts "#{the_headline.title} - #{the_headline.author} - #{the_headline.publisher}"
+        puts "\n\t#{the_headline.title} - #{the_headline.author} - #{the_headline.publisher}"
+        puts "\n\t#{the_headline.timestamp}"
+        puts "\n\t#{the_headline.url}"
+        puts "\n #{the_headline.summary}"
       elsif input == "retrieve"
         list_headlines
       else input != "exit"
