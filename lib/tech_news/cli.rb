@@ -16,8 +16,6 @@ class TechNews::CLI
   end
 
   def option
-    #input = ""
-    #while input != "exit"
       puts <<-DOC.gsub /^\s*/, ''
       \nIf you would like more information, input the number of the article or type
       'exit' to leave. If you would like to retrieve the newest headlines again,

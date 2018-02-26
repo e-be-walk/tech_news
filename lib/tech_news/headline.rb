@@ -56,12 +56,6 @@ class TechNews::Headline
     article.timestamp = doc.search("div.byline time.timestamp").first.text.strip
 
     article
-
   end
-
-  #def self.scrape_content
-
-  #end
-
-
+  
 end
