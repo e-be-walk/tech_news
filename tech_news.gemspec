@@ -11,12 +11,12 @@ Gem::Specification.new do |spec|
 
   spec.summary       = %q{A gem to pull data from popular tech news sites}
   spec.description   = %q{This gem will pull the newest headlines in tech from Wired, Techcrunch, and the New York Times.}
-  spec.homepage      = "https://github.com/e-be-walk/cli-data-gem-assessment-v-000"
+  spec.homepage      = "https://github.com/e-be-walk/tech_news"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
   # to allow pushing to a single host or delete this section to allow pushing to any host.
   if spec.respond_to?(:metadata)
-    spec.metadata["allowed_push_host"] = "https://github.com/e-be-walk/cli-data-gem-assessment-v-000"
+    spec.metadata["allowed_push_host"] = "https://github.com/e-be-walk/tech_news"
   else
     raise "RubyGems 2.0 or newer is required to protect against " \
       "public gem pushes."
