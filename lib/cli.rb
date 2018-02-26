@@ -10,8 +10,8 @@ class TechNews::CLI
   def list_headlines
     puts "Here are the newest headlines in tech:"
     @headlines = TechNews::Headline.today
-    @headlines.each.with_index(1) do |headline, i|
-      puts "#{i}. #{headline.title} - #{headline.author} - #{headline.publisher}"
+    @headlines.each.with_index(1) do |article, i|
+      puts "#{i}. #{article.title} - #{article.author} - #{article.publisher}"
     end
   end
 
@@ -22,13 +22,13 @@ class TechNews::CLI
       type 'retrieve'.
       DOC
       input = gets.strip
-      
+
       if input.to_i > 0
-        the_headline = @headlines[input.to_i-1]
-        puts "\n\t#{the_headline.title} - #{the_headline.author} - #{the_headline.publisher}"
-        puts "\n\t#{the_headline.timestamp}"
-        puts "\n\t#{the_headline.url}"
-        puts "\n #{the_headline.summary}"
+        article = @headlines[input.to_i-1]
+        puts "\n\t#{article.title} - #{article.author} - #{article.publisher}"
+        puts "\n\t#{article.timestamp}"
+        puts "\n\t#{article.url}"
+        puts "\n #{article.summary}"
         #system("open -a Chrome #{the_headline.url}")
         open_browser
       elsif input == "retrieve"
@@ -45,7 +45,7 @@ class TechNews::CLI
     input = gets.strip
     #N and else works but something about the way I am calling the URL to open in system is not
     if input == "Y"
-      system("open -a Chrome #{@headlines.url}")
+      system("open -a Chrome #{@headlines.article.url}")
     elsif input == "N"
       call
     else
