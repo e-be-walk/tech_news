@@ -1,4 +1,4 @@
-class TechNews::CLI
+class CLI
 
   def call
     list_headlines
@@ -9,7 +9,7 @@ class TechNews::CLI
 
   def list_headlines
     puts "Here are the newest headlines in tech:"
-    @headlines = TechNews::Headline.today
+    @headlines = Headline.today
     @headlines.each.with_index(1) do |article, i|
       puts "#{i}. #{article.title} - #{article.author} - #{article.publisher}"
     end

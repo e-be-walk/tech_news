@@ -1,4 +1,4 @@
 #!/usr/bin/env ruby
 
 require './lib/tech_news'
-TechNews::CLI.new.call
+CLI.new.call

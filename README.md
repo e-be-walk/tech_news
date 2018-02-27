@@ -11,4 +11,4 @@ information and open the webpage in your browser.
 Bug reports and pull requests are welcome on GitHub at https://github.com/e-be-walk/tech_news
 
 # Licenses
-This gem is availble as open source under the terms of the <a href="http://opensource.org/licenses/MIT" rel="nofollow"> MIT License</a>
+This gem is available as open source under the terms of the <a href="http://opensource.org/licenses/MIT" rel="nofollow"> MIT License</a>

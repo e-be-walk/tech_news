@@ -1,4 +1,4 @@
-class TechNews::Headline
+class Headline
   attr_accessor :title, :author, :publisher, :url, :summary, :timestamp
 
   def self.today
@@ -57,5 +57,5 @@ class TechNews::Headline
 
     article
   end
-  
+
 end
