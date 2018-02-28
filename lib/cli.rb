@@ -3,8 +3,6 @@ class CLI
   def call
     list_headlines
     option
-    #open_browser
-    #goodbye
   end
 
   def list_headlines
@@ -13,14 +11,14 @@ class CLI
     @headlines.each.with_index(1) do |article, i|
       puts "#{i}. #{article.title} - #{article.author} - #{article.publisher}"
     end
+      puts <<-DOC.gsub /^\s*/, ''
+      If you would like more information, input the number of the article or type
+      'exit' to leave. If you would like to retrieve the newest headlines again,
+      type 'menu'.
+      DOC
   end
 
   def option
-      puts <<-DOC.gsub /^\s*/, ''
-      \nIf you would like more information, input the number of the article or type
-      'exit' to leave. If you would like to retrieve the newest headlines again,
-      type 'retrieve'.
-      DOC
       input = gets.strip
 
       if input.to_i > 0
@@ -28,29 +26,16 @@ class CLI
         puts "\n\t#{article.title} - #{article.author} - #{article.publisher}"
         puts "\n\t#{article.timestamp}"
         puts "\n\t#{article.url}"
-        puts "\n #{article.summary}"
-        #system("open -a Chrome #{the_headline.url}")
-        open_browser
-      elsif input == "retrieve"
+        puts "\n\t#{article.summary}"
+        puts "\nIf you would like to return to the headlines enter 'menu', otherwise exit."
+        option
+      elsif input == "menu"
         call
       elsif input == "exit"
         goodbye
       else
-        puts "I don't understand your input. Type 1, 2, or 3, exit or retrieve to make a choice."
+        puts "I don't understand your input. Type 1, 2, or 3, exit or menu to make a choice."
       end
-  end
-
-  def open_browser
-    puts "\n Would you like me to open this article in your browser? Y/N?"
-    input = gets.strip
-    #N and else works but something about the way I am calling the URL to open in system is not
-    if input == "Y"
-      system("open -a Chrome #{@headlines.article.url}")
-    elsif input == "N"
-      call
-    else
-      goodbye
-    end
   end
 
   def goodbye
