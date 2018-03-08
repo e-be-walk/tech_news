@@ -1,28 +1,33 @@
 class CLI
 
   def call
+    puts "Here are the newest headlines in tech:"
+    #Scrape.scrape_articles
+    #Article.show_headlines
+    #nytimes = Article.new(" ", Scrape.scrape_nytimes)
+    #wired = Article.new(" ", Scrape.scrape_wired)
+    #techcruch = Article.new(" ", Scrape.scrape_techcrunch)
     list_headlines
     option
-    Scrape.new.scrape_articles
   end
 
   def list_headlines
-    puts "Here are the newest headlines in tech:"
-    @articles = Scrape.scrape_articles
-    @articles.each_with_index do |article, i|
+    Article.all.each_with_index do |article, i|
       puts "#{i + 1}. #{article.title} - #{article.author} - #{article.publisher}"
+      binding.pry 
     end
-      puts <<-DOC.gsub /^\s*/, ''
-      If you would like more information, input the number of the article or type
-      'exit' to leave. If you would like to retrieve the newest headlines again,
-      type 'menu'.
-      DOC
+
+    puts <<-DOC.gsub /^\s*/, ''
+    If you would like more information, input the number of the article or type
+    'exit' to leave. If you would like to retrieve the newest headlines again,
+    type 'menu'.
+    DOC
   end
 
   def option
       input = gets.strip
 
-      if input.to_i > 0
+      if input.to_i.between?(1, Article.all.count)
         article = @articles[input.to_i-1]
         puts "\n\t#{article.title} - #{article.author} - #{article.publisher}"
         puts "\n\t#{article.timestamp}"
