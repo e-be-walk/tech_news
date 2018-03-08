@@ -3,13 +3,14 @@ class CLI
   def call
     list_headlines
     option
+    Scrape.new.scrape_articles
   end
 
   def list_headlines
     puts "Here are the newest headlines in tech:"
-    @headlines = Headline.today
-    @headlines.each.with_index(1) do |article, i|
-      puts "#{i}. #{article.title} - #{article.author} - #{article.publisher}"
+    @articles = Scrape.scrape_articles
+    @articles.each_with_index do |article, i|
+      puts "#{i + 1}. #{article.title} - #{article.author} - #{article.publisher}"
     end
       puts <<-DOC.gsub /^\s*/, ''
       If you would like more information, input the number of the article or type
@@ -22,7 +23,7 @@ class CLI
       input = gets.strip
 
       if input.to_i > 0
-        article = @headlines[input.to_i-1]
+        article = @articles[input.to_i-1]
         puts "\n\t#{article.title} - #{article.author} - #{article.publisher}"
         puts "\n\t#{article.timestamp}"
         puts "\n\t#{article.url}"

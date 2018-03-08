@@ -1,4 +1,22 @@
 class Scrape
+  attr_accessor :title, :author, :publisher, :url, :summary, :timestamp
+
+  #def self.today
+  #  self.scrape_news
+  #end
+  def initialize
+    @article = article
+  end
+
+  def self.scrape_articles
+    articles = []
+
+    articles << self.scrape_nytimes
+    articles << self.scrape_wired
+    articles << self.scrape_techcrunch
+
+    articles
+  end
 
   def self.scrape_nytimes
     doc = Nokogiri::HTML(open("https://www.nytimes.com/section/technology"))
