@@ -2,11 +2,10 @@ class Article
   attr_accessor :title, :author, :publisher, :url, :summary, :timestamp
   @@all = []
 
-  def initialize(headline, attributes)
+  def initialize(publisher, attributes)
 
-    @attributes.each do |article_attribute, attribute_value|
-      self.send("#{article_attribute}", attribute_value)
-    end
+    attributes.each{|article_attribute, attribute_value| self.send("#{article_attribute}=", attribute_value)}
+
 
     @headline = headline
 

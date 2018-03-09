@@ -20,6 +20,7 @@ class Scrape
 
   def self.scrape_nytimes
     nytimes = Nokogiri::HTML(open("https://www.nytimes.com/section/technology"))
+    nytimes.search("#latest-panel h2.headline").first.collect do |article|
 
       article_hash = {
         :title => nytimes.search("#latest-panel h2.headline").first.text.strip,
@@ -30,6 +31,7 @@ class Scrape
         :timestamp => nytimes.search("div.stream footer.story-footer").first.text.strip
       }
     article_hash
+  end
   end
 
 
