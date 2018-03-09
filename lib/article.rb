@@ -2,14 +2,13 @@ class Article
   attr_accessor :title, :author, :publisher, :url, :summary, :timestamp
   @@all = []
 
-  def initialize(publisher, article_array)
-    @publisher = publisher
+  def initialize(headline, attributes)
 
-    @articles = article_array.collect do |article_attribute|
-      Article.new(self, article_attribute)
+    @attributes.each do |article_attribute, attribute_value|
+      self.send("#{article_attribute}", attribute_value)
     end
 
-
+    @headline = headline
 
     @@all << self
   end
