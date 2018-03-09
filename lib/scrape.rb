@@ -8,19 +8,20 @@ class Scrape
   #  @article = article
   #end
 
-  #def self.scrape_articles
-  #  article = []
+  def self.scrape_articles
+    Article.all = article_hash
+    article_hash = []
 
-  #  article << self.scrape_nytimes
-  #  article << self.scrape_wired
-  #  article << self.scrape_techcrunch
+    article_hash << self.scrape_nytimes
+    article_hash << self.scrape_wired
+    article_hash << self.scrape_techcrunch
 
-  #  article
-  #end
+    article_hash
+  end
 
   def self.scrape_nytimes
     doc = Nokogiri::HTML(open("https://www.nytimes.com/section/technology"))
-      article_array = {
+      article_hash = {
         :title => doc.search("#latest-panel h2.headline").first.text.strip,
         :author => doc.search("#latest-panel p.byline").first.text.strip,
         :publisher => "The New York Times",
@@ -28,13 +29,13 @@ class Scrape
         :summary => doc.search("#latest-panel p.summary").first.text.strip,
         :timestamp => doc.search("div.stream footer.story-footer").first.text.strip
       }
-    article_array
+    Article.all << article_hash
   end
 
   def self.scrape_wired
     doc = Nokogiri::HTML(open("https://www.wired.com/"))
 
-    article_array = {
+    article_hash = {
       :title => doc.search("div.secondary-grid-component h5.post-listing-list-item__title").first.text,
       :author => doc.search("div.secondary-grid-component span.byline-component__content").first.text,
       :publisher => "Wired",
@@ -43,13 +44,13 @@ class Scrape
       :timestamp => "Sorry- Wired does not include a timestamp. I assure you, this is the most recent article on their page.\n"
     }
 
-    article_array
+    Article.all << article_hash
   end
 
   def self.scrape_techcrunch
     doc = Nokogiri::HTML(open("https://techcrunch.com/"))
 
-    article_array = {
+    article_hash = {
       :title => doc.search("div.block-content h2.post-title").first.text,
       :author => doc.search("div.block-content div.byline a").first.attr("title"),
       :publisher => "TechCrunch",
@@ -58,7 +59,7 @@ class Scrape
       :timestamp => doc.search("div.byline time.timestamp").first.text.strip
     }
 
-    article_array
+    Article.all << article_hash
   end
 
 

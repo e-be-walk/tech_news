@@ -4,17 +4,18 @@ class CLI
     puts "Here are the newest headlines in tech:"
     #Scrape.scrape_articles
     #Article.show_headlines
-    #nytimes = Article.new(" ", Scrape.scrape_nytimes)
-    #wired = Article.new(" ", Scrape.scrape_wired)
-    #techcruch = Article.new(" ", Scrape.scrape_techcrunch)
+    nytimes = Article.new("The New York Times", Scrape.scrape_nytimes)
+    wired = Article.new("Wired", Scrape.scrape_wired)
+    techcrunch = Article.new("TechCrunch", Scrape.scrape_techcrunch)
     list_headlines
     option
   end
 
   def list_headlines
+    #Article.show_headlines
     Article.all.each_with_index do |article, i|
       puts "#{i + 1}. #{article.title} - #{article.author} - #{article.publisher}"
-      binding.pry 
+      #binding.pry
     end
 
     puts <<-DOC.gsub /^\s*/, ''
