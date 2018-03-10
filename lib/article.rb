@@ -21,13 +21,4 @@ class Article
     end
   end
 
-  #def self.show_details
-  #  all.each_with_index do |article|
-  #    puts "\n\t#{article.title} - #{article.author} - #{article.publisher}"
-  #    puts "\n\t#{article.timestamp}"
-  #    puts "\n\t#{article.url}"
-  #    puts "\n\t#{article.summary}"
-  #  end
-  #end
-
 end

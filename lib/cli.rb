@@ -1,43 +1,40 @@
 class CLI
 
   def call
-    puts "Here are the newest headlines in tech:"
     Scrape.scrape_articles
-    Article.show_headlines
-    #Headline.print_all
     list_headlines
-    option
   end
 
   def list_headlines
+    puts "Here are the newest headlines in tech:"
+    Article.show_headlines
 
     puts <<-DOC.gsub /^\s*/, ''
     If you would like more information, input the number of the article or type
     'exit' to leave. If you would like to retrieve the newest headlines again,
     type 'menu'.
     DOC
+    option
   end
 
   def option
-      input = gets.strip
+    input = gets.strip
 
-      if input.to_i-1 <= Article.all.size
+    if input == "menu"
+      list_headlines
+    elsif input == "exit"
+      goodbye
+    elsif input.to_i.between?(1, Article.all.count)
         article = Article.all[input.to_i-1]
-        Article.all.each_with_index do |article|
           puts "\n\t#{article.title} - #{article.author} - #{article.publisher}"
           puts "\n\t#{article.timestamp}"
           puts "\n\t#{article.url}"
           puts "\n\t#{article.summary}"
-
-        puts "\nIf you would like to return to the headlines enter 'menu', otherwise exit."
+          puts "\nIf you would like to return to the headlines enter 'menu', otherwise exit."
         option
-        end
-      elsif input == "menu"
-        call
-      elsif input == "exit"
-        goodbye
       else
         puts "I don't understand your input. Type 1, 2, or 3, exit or menu to make a choice."
+        list_headlines
       end
   end
 
