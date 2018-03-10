@@ -18,7 +18,7 @@ class Article
   end
 
   def self.show_headlines
-    @all.each_with_index do |article, i|
+    all.each_with_index do |article, i|
       puts "#{i + 1}. #{article.title} - #{article.author} - #{article.publisher}"
     end
   end

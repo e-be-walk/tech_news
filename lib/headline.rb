@@ -5,7 +5,7 @@ class Headline
   def initialize(publisher, article_array)
     @publisher = publisher
 
-    @articles = article_array.collect do |article_attributes|
+    @article = article_array.collect do |article_attributes|
       Article.new(self, article_attributes)
     end
 

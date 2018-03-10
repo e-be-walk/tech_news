@@ -4,6 +4,7 @@ class CLI
     puts "Here are the newest headlines in tech:"
     Scrape.scrape_articles
     Article.show_headlines
+    #Headline.print_all
     list_headlines
     option
   end
