@@ -21,14 +21,17 @@ class CLI
   def option
       input = gets.strip
 
-      if input.to_i.between?(1, Article.all.count)
-        article = @articles[input.to_i-1]
-        puts "\n\t#{article.title} - #{article.author} - #{article.publisher}"
-        puts "\n\t#{article.timestamp}"
-        puts "\n\t#{article.url}"
-        puts "\n\t#{article.summary}"
+      if input.to_i-1 <= Article.all.size
+        article = Article.all[input.to_i-1]
+        Article.all.each_with_index do |article|
+          puts "\n\t#{article.title} - #{article.author} - #{article.publisher}"
+          puts "\n\t#{article.timestamp}"
+          puts "\n\t#{article.url}"
+          puts "\n\t#{article.summary}"
+
         puts "\nIf you would like to return to the headlines enter 'menu', otherwise exit."
         option
+        end
       elsif input == "menu"
         call
       elsif input == "exit"

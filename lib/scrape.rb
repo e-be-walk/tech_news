@@ -1,13 +1,9 @@
 class Scrape
 
   def self.scrape_articles
-    article_array = []
-
-    article_array << self.scrape_nytimes
-    article_array << self.scrape_wired
-    article_array << self.scrape_techcrunch
-
-    Article.all << article_array
+    self.scrape_nytimes
+    self.scrape_wired
+    self.scrape_techcrunch
   end
 
   def self.scrape_nytimes
@@ -21,7 +17,7 @@ class Scrape
         :summary => nytimes.search("#latest-panel p.summary").first.text.strip,
         :timestamp => nytimes.search("div.stream footer.story-footer").first.text.strip
       }
-    article_hash
+    Article.new(article_hash)
   end
 
 
@@ -37,7 +33,7 @@ class Scrape
       :timestamp => "Sorry- Wired does not include a timestamp. I assure you, this is the most recent article on their page.\n"
     }
 
-    article_hash
+    Article.new(article_hash)
   end
 
   def self.scrape_techcrunch
@@ -51,7 +47,7 @@ class Scrape
       :summary => doc.search("div.block-content p.excerpt").first.text,
       :timestamp => doc.search("div.byline time.timestamp").first.text.strip
     }
-    article_hash
+    Article.new(article_hash)
   end
 
 
