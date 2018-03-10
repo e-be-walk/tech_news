@@ -2,20 +2,13 @@ class CLI
 
   def call
     puts "Here are the newest headlines in tech:"
-    #Scrape.scrape_articles
-    #Article.show_headlines
-    nytimes = Headline.new("The New York Times", Scrape.scrape_nytimes)
-    #wired = Article.new("Wired", Scrape.scrape_wired)
-    #techcrunch = Article.new("TechCrunch", Scrape.scrape_techcrunch)
+    Scrape.scrape_articles
+    Article.show_headlines
     list_headlines
     option
   end
 
   def list_headlines
-    #Article.show_headlines
-    Headline.print_all
-      #binding.pry
-    #end
 
     puts <<-DOC.gsub /^\s*/, ''
     If you would like more information, input the number of the article or type

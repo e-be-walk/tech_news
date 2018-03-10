@@ -1,12 +1,4 @@
 class Scrape
-  #attr_accessor :title, :author, :publisher, :url, :summary, :timestamp
-
-  #def self.today
-  #  self.scrape_news
-  #end
-  #def initialize
-  #  @article = article
-  #end
 
   def self.scrape_articles
     article_array = []
@@ -15,12 +7,11 @@ class Scrape
     article_array << self.scrape_wired
     article_array << self.scrape_techcrunch
 
-    article_array
+    Article.all << article_array
   end
 
   def self.scrape_nytimes
     nytimes = Nokogiri::HTML(open("https://www.nytimes.com/section/technology"))
-    nytimes.search("#latest-panel h2.headline").first.collect do |article|
 
       article_hash = {
         :title => nytimes.search("#latest-panel h2.headline").first.text.strip,
@@ -31,7 +22,6 @@ class Scrape
         :timestamp => nytimes.search("div.stream footer.story-footer").first.text.strip
       }
     article_hash
-  end
   end
 
 
@@ -47,7 +37,7 @@ class Scrape
       :timestamp => "Sorry- Wired does not include a timestamp. I assure you, this is the most recent article on their page.\n"
     }
 
-    Article.new << article_hash
+    article_hash
   end
 
   def self.scrape_techcrunch
@@ -61,7 +51,7 @@ class Scrape
       :summary => doc.search("div.block-content p.excerpt").first.text,
       :timestamp => doc.search("div.byline time.timestamp").first.text.strip
     }
-    Article.new << article_hash
+    article_hash
   end
 
 

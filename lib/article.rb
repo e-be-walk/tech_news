@@ -2,12 +2,12 @@ class Article
   attr_accessor :title, :author, :publisher, :url, :summary, :timestamp
   @@all = []
 
-  def initialize(publisher, attributes)
+  def initialize(attributes)
 
     attributes.each{|article_attribute, attribute_value| self.send("#{article_attribute}=", attribute_value)}
 
-
-    @headline = headline
+    binding.pry
+    #@headline = headline
 
     @@all << self
   end
@@ -18,7 +18,7 @@ class Article
   end
 
   def self.show_headlines
-    all.each_with_index do |article, i|
+    @all.each_with_index do |article, i|
       puts "#{i + 1}. #{article.title} - #{article.author} - #{article.publisher}"
     end
   end
