@@ -30,7 +30,7 @@ class CLI
           puts "\n\t#{article.timestamp}"
           puts "\n\t#{article.url}"
           puts "\n\t#{article.summary}"
-          puts "\nIf you would like to read the article, input the article number again."
+          puts "\nIf you would like to read the article, input the article number again. If you're not interested, type 'menu' or 'exit'."
           article_content
           #puts "\nIf you would like to return to the headlines enter 'menu', otherwise exit."
         #option
@@ -48,7 +48,7 @@ class CLI
         puts "#{article.content}"
         puts "\n\n\nI hope you enjoyed that article. I'll return you to the menu."
         list_headlines
-    elsif ["N", "NO"].include?(input.upcase)
+    elsif input == "menu"
       puts "\n\n\nOk, I'll return you to the menu."
       list_headlines
     else
