@@ -30,12 +30,29 @@ class CLI
           puts "\n\t#{article.timestamp}"
           puts "\n\t#{article.url}"
           puts "\n\t#{article.summary}"
-          puts "\nIf you would like to return to the headlines enter 'menu', otherwise exit."
-        option
+          puts "\nIf you would like to read the article, input the article number again."
+          article_content
+          #puts "\nIf you would like to return to the headlines enter 'menu', otherwise exit."
+        #option
       else
         puts "I don't understand your input. Type 1, 2, or 3, exit or menu to make a choice."
         list_headlines
       end
+  end
+
+  def article_content
+    input = gets.strip
+
+    if input.to_i.between?(1, Article.all.count)
+        article = Article.all[input.to_i-1]
+        puts "#{article.content}"
+        goodbye
+    elsif ["N", "NO"].include?(input.upcase)
+      list_headlines
+    else
+      puts "I don't understand your input. Type Y or N exit or menu to make a choice."
+      list_headlines
+    end
   end
 
   def goodbye

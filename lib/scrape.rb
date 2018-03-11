@@ -17,6 +17,10 @@ class Scrape
         :summary => nytimes.search("#latest-panel p.summary").first.text.strip,
         :timestamp => nytimes.search("div.stream footer.story-footer").first.text.strip
       }
+
+      content_page = Nokogiri::HTML(open(article_hash[:url]))
+      article_hash[:content] = content_page.search("div.story-body-supplemental p.story-body-text.story-content").text
+
     Article.new(article_hash)
   end
 
@@ -28,7 +32,7 @@ class Scrape
       :title => doc.search("div.secondary-grid-component h5.post-listing-list-item__title").first.text,
       :author => doc.search("div.secondary-grid-component span.byline-component__content").first.text,
       :publisher => "Wired",
-      :url => doc.search("div.secondary-grid-component a.post-listing-list-item__link").first.attr("href"),
+      :url => "https://www.wired.com#{doc.search("div.secondary-grid-component a.post-listing-list-item__link").first.attr("href")}",
       :summary => "Unfortunately, Wired does not include a summary either.",
       :timestamp => "Sorry- Wired does not include a timestamp. I assure you, this is the most recent article on their page.\n"
     }
