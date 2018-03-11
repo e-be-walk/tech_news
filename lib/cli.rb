@@ -46,8 +46,10 @@ class CLI
     if input.to_i.between?(1, Article.all.count)
         article = Article.all[input.to_i-1]
         puts "#{article.content}"
-        goodbye
+        puts "\n\n\nI hope you enjoyed that article. I'll return you to the menu."
+        list_headlines
     elsif ["N", "NO"].include?(input.upcase)
+      puts "\n\n\nOk, I'll return you to the menu."
       list_headlines
     else
       puts "I don't understand your input. Type Y or N exit or menu to make a choice."

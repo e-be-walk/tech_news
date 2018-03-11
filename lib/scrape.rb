@@ -37,6 +37,9 @@ class Scrape
       :timestamp => "Sorry- Wired does not include a timestamp. I assure you, this is the most recent article on their page.\n"
     }
 
+    content_page = Nokogiri::HTML(open(article_hash[:url]))
+    article_hash[:content] = content_page.search("article.article-body-component.article-body-component--business p").text
+
     Article.new(article_hash)
   end
 
@@ -51,6 +54,9 @@ class Scrape
       :summary => doc.search("div.block-content p.excerpt").first.text,
       :timestamp => doc.search("div.byline time.timestamp").first.text.strip
     }
+
+    content_page = Nokogiri::HTML(open(article_hash[:url]))
+    article_hash[:content] = content_page.search("div.article-entry").text
     Article.new(article_hash)
   end
 
