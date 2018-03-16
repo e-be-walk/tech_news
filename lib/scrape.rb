@@ -38,7 +38,7 @@ class Scrape
     }
 
     content_page = Nokogiri::HTML(open(article_hash[:url]))
-    article_hash[:content] = content_page.search("article.article-body-component.article-body-component--business p").text
+    article_hash[:content] = content_page.search("main.article-main-component__content p").text
 
     Article.new(article_hash)
   end
@@ -47,16 +47,16 @@ class Scrape
     doc = Nokogiri::HTML(open("https://techcrunch.com/"))
 
     article_hash = {
-      :title => doc.search("div.block-content h2.post-title").first.text,
-      :author => doc.search("div.block-content div.byline a").first.attr("title"),
+      :title => doc.search("div.river.river--homepage h2.post-block__title").first.text.strip,
+      :author => doc.search("div.river.river--homepage span.river-byline__authors").first.text.strip,
       :publisher => "TechCrunch",
-      :url => doc.search("div.block-content h2.post-title a").first.attr("href"),
-      :summary => doc.search("div.block-content p.excerpt").first.text,
-      :timestamp => doc.search("div.byline time.timestamp").first.text.strip
+      :url => doc.search("div.river.river--homepage a").first.attr("href"),
+      :summary => doc.search("div.river.river--homepage div.post-block__content").first.text.strip,
+      :timestamp => doc.search("div.river.river--homepage time.river-byline__time").first.text
     }
 
     content_page = Nokogiri::HTML(open(article_hash[:url]))
-    article_hash[:content] = content_page.search("div.article-entry").text
+    article_hash[:content] = content_page.search("div.article-content p").text.strip
     Article.new(article_hash)
   end
 
